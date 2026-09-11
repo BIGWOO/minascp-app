@@ -201,9 +201,9 @@ struct WorkspaceTabChip: View {
         }
     }
     private var decoratedLabel: some View {
-        label.font(.system(size: 12)).padding(.horizontal, 12).padding(.vertical, 9)
-            .background(selected ? Color.white : Color.clear, in: RoundedRectangle(cornerRadius: 7))
-            .overlay(alignment: .bottom) { Rectangle().fill(siteColor(tab.state.color)).frame(height: selected ? 3 : 1) }
+        label.font(.system(size: 13, weight: selected ? .medium : .regular)).padding(.horizontal, 12).padding(.vertical, 10)
+            .background(selected ? Color.primary.opacity(0.075) : Color.clear, in: RoundedRectangle(cornerRadius: 9))
+            .overlay(alignment: .bottom) { Capsule().fill(siteColor(tab.state.color)).frame(height: selected ? 2 : 0).padding(.horizontal, 10) }
             .background(GeometryReader { proxy in Color.clear.onAppear { model.tabFrames[tab.id] = proxy.frame(in: .global) }.onChange(of: proxy.frame(in: .global)) { _, value in model.tabFrames[tab.id] = value } })
             .contentShape(Rectangle()).onTapGesture { model.selectTab(tab.id) }.help(tooltip)
     }

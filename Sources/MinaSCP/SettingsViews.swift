@@ -28,7 +28,7 @@ struct PresentationView: View {
             else if model.showEdits { EditsView(model: model, edits: model.edits) }
             else if model.showSearch { VStack(alignment: .leading) { HStack { Text("搜尋結果").font(.headline); if model.searching { ProgressView().controlSize(.small) }; Spacer(); Button("關閉") { model.showSearch = false } }; List(model.searchResults) { entry in Button(entry.path) { if let tab = model.current { Task { await tab.navigate(RemotePath.parent(entry.path), side: tab.state.activeSide); model.showSearch = false } } } }; if let error = model.error { Text(error).font(.caption).foregroundStyle(.red) } }.padding(20).frame(width: 750,height: 500) }
             else { SiteManagerView(model: model) }
-        }.preferredColorScheme(.light)
+        }.minaWindowAppearance(model: model)
     }
 }
 struct AuthenticationView: View {
@@ -151,20 +151,22 @@ struct ImportSitesView: View {
 struct PreferencesView: View {
     @ObservedObject var model: BrowserModel
     @State private var search = ""
-    @State private var section = "介面與面板"
-    let sections = ["介面與面板","傳輸與背景","編輯器","網路與安全","通知與記錄"]
+    @State private var section = "外觀"
+    let sections = ["外觀","介面與面板","傳輸與背景","編輯器","網路與安全","通知與記錄"]
     var body: some View {
         VStack {
             HStack { Text("偏好設定").font(.title2); Button("自訂指令範本…") { model.commands.showManager = true }; Spacer(); Button("儲存並關閉") { model.savePreferences(); model.showPreferences = false } }.padding(16)
             HSplitView {
                 VStack { TextField("搜尋設定", text: $search).textFieldStyle(.roundedBorder).padding(10); List(sections.filter { search.isEmpty || $0.localizedCaseInsensitiveContains(search) || keywords($0).localizedCaseInsensitiveContains(search) }, id: \.self, selection: $section) { Text($0) } }.frame(width: 180)
                 Form {
-                    if section == "介面與面板" {
+                    if section == "外觀" {
+                        AppearancePreferencesView(model: model)
+                    } else if section == "介面與面板" {
                         Toggle("WinSCP／Commander 功能鍵", isOn: $model.preferences.commanderKeys)
                         Toggle("顯示隱藏檔案", isOn: $model.preferences.showHidden)
                         Toggle("重啟恢復工作區分頁（不自動連線）", isOn: $model.preferences.restoreWorkspace)
                         Toggle("展開傳輸佇列", isOn: $model.preferences.queueExpanded)
-                        Text("欄寬與欄位順序由表格自動保存；文字區域維持實色，工具列與側欄使用霧面背景。").font(.caption).foregroundStyle(.secondary)
+                        Text("欄寬與欄位順序由表格自動保存；外觀與透明度可在「外觀」調整。").font(.caption).foregroundStyle(.secondary)
                     } else if section == "傳輸與背景" {
                         Stepper("背景並行：\(model.preferences.concurrentTransfers)", value: $model.preferences.concurrentTransfers, in: 1...8)
                         TextField("限速 bytes/s（0 不限）", value: $model.preferences.speedLimit, format: .number)
@@ -191,9 +193,9 @@ struct PreferencesView: View {
                     }
                 }.formStyle(.grouped).frame(minWidth: 480)
             }
-        }.frame(width: 760,height: 540)
+        }.frame(width: 800,height: 600).onDisappear { model.flushAppearancePreferences() }
     }
-    func keywords(_ section: String) -> String { switch section { case "介面與面板": return "快捷鍵 排序 隱藏 重啟 分頁"; case "傳輸與背景": return "速度 並行 同名 覆蓋 取消 排除"; case "編輯器": return "VS Code 自動儲存"; case "網路與安全": return "主機 指紋 密碼 Keychain 跳板"; default: return "通知 音效 日誌 記錄 匯出" } }
+    func keywords(_ section: String) -> String { switch section { case "外觀": return "明亮 深色 系統 玻璃 透明度 主題"; case "介面與面板": return "快捷鍵 排序 隱藏 重啟 分頁"; case "傳輸與背景": return "速度 並行 同名 覆蓋 取消 排除"; case "編輯器": return "VS Code 自動儲存"; case "網路與安全": return "主機 指紋 密碼 Keychain 跳板"; default: return "通知 音效 日誌 記錄 匯出" } }
     var diagnostics: String { "MinaSCP 0.2\n站台數：\(model.sites.count)\n分頁數：\(model.tabs.count)\n" + TransferState.allStates.map { state in "\(state.rawValue)：\(model.queue.records.filter { $0.state == state }.count)" }.joined(separator: "\n") }
 }
 extension TransferState { static let allStates: [TransferState] = [.waiting,.running,.paused,.decision,.complete,.failed,.cancelled] }

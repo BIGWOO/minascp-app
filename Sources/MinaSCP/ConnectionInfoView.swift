@@ -62,7 +62,7 @@ struct ConnectionInfoView: View {
                 }.padding(14).tabItem { Text("能力") }.tag(1)
             }
             HStack { Button(copied ? "已複製資訊" : "複製資訊") { NSPasteboard.general.clearContents(); NSPasteboard.general.setString(inspector.copiedText, forType: .string); copied = true }; Spacer(); Button("關閉", action: close).keyboardShortcut(.cancelAction) }
-        }.padding(22).frame(minWidth: 820, idealWidth: 880, minHeight: 580, idealHeight: 620).preferredColorScheme(.light)
+        }.padding(22).frame(minWidth: 820, idealWidth: 880, minHeight: 580, idealHeight: 620)
     }
 }
 extension BrowserModel {
@@ -78,7 +78,7 @@ extension BrowserModel {
             connectionInfoWindow?.close()
             let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 880, height: 620), styleMask: [.titled,.closable,.resizable], backing: .buffered, defer: false)
             window.title = "\(tab.state.title) — 伺服器資訊"; window.isReleasedWhenClosed = false
-            window.contentViewController = NSHostingController(rootView: ConnectionInfoView(inspector: inspector) { [weak window] in window?.close() })
+            window.contentViewController = NSHostingController(rootView: ConnectionInfoView(inspector: inspector) { [weak window] in window?.close() }.minaWindowAppearance(model: self))
             connectionInfoWindow = window; window.center(); window.makeKeyAndOrderFront(nil)
         }
     }

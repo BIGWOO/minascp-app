@@ -64,8 +64,10 @@ struct FileTable: NSViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeNSView(context: Context) -> NSScrollView {
         let scroll = NSScrollView(), table = CommanderTable()
-        table.style = .fullWidth; table.rowHeight = 27; table.intercellSpacing = NSSize(width: 10, height: 0)
-        table.usesAlternatingRowBackgroundColors = true; table.allowsMultipleSelection = true; table.allowsColumnReordering = true
+        table.style = .inset; table.rowHeight = 30; table.intercellSpacing = NSSize(width: 10, height: 0)
+        table.usesAlternatingRowBackgroundColors = false; table.allowsMultipleSelection = true; table.allowsColumnReordering = true
+        table.backgroundColor = .clear
+        scroll.drawsBackground = false; scroll.contentView.drawsBackground = false
         for (id, title, width) in [("name","名稱",190.0),("size","大小",65.0),("modified","修改日期",125.0),("permissions","權限",50.0),("owner","UID:GID",70.0),("kind","種類",75.0)] {
             let col = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(id)); col.title = title; col.width = width; col.minWidth = id == "name" ? 140 : 45
             if ["name","size","modified","kind"].contains(id) { col.sortDescriptorPrototype = NSSortDescriptor(key: id, ascending: true) }
@@ -95,6 +97,7 @@ struct FileTable: NSViewRepresentable {
                 guard captured.valid else { return }; Task { await tab.navigate(path, side: captured.side) }
             })
             model.commands.appendMenu(to: menu, context: captured)
+            menu.appearance = model.preferences.appearanceMode.nsAppearance
             return menu
         }
         let columns = NSMenu()
@@ -114,6 +117,8 @@ struct FileTable: NSViewRepresentable {
     }
     func updateNSView(_ view: NSScrollView, context: Context) {
         let c = context.coordinator; c.parent = self; c.table?.commanderKeys = model.preferences.commanderKeys
+        view.appearance = model.preferences.appearanceMode.nsAppearance
+        c.table?.headerView?.menu?.appearance = model.preferences.appearanceMode.nsAppearance
         let selected = remote ? tab.state.remote.selection : tab.state.local.selection
         if c.rows != entries { c.rows = entries; c.reloading = true; c.table?.reloadData(); c.reloading = false }
         let indexes = IndexSet(c.rows.indices.filter { selected.contains(c.rows[$0].id) })
@@ -135,7 +140,7 @@ struct FileTable: NSViewRepresentable {
             if id == "name" {
                 let cell = NSTableCellView(), icon = NSImageView(), text = NSTextField(labelWithString: entry.name)
                 icon.image = NSImage(systemSymbolName: entry.directory ? "folder.fill" : entry.kind == .symlink ? "link" : "doc", accessibilityDescription: nil); icon.contentTintColor = entry.directory ? .systemBlue : .secondaryLabelColor
-                text.font = .systemFont(ofSize: 12); text.lineBreakMode = .byTruncatingMiddle
+                text.font = .systemFont(ofSize: 13); text.lineBreakMode = .byTruncatingMiddle
                 for child in [icon,text] { child.translatesAutoresizingMaskIntoConstraints = false; cell.addSubview(child) }
                 NSLayoutConstraint.activate([icon.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 4), icon.centerYAnchor.constraint(equalTo: cell.centerYAnchor), icon.widthAnchor.constraint(equalToConstant: 18), text.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 7), text.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -4), text.centerYAnchor.constraint(equalTo: cell.centerYAnchor)])
                 return cell
@@ -148,7 +153,7 @@ struct FileTable: NSViewRepresentable {
             case "owner": value = "\(entry.attributes.uid ?? 0):\(entry.attributes.gid ?? 0)"
             default: value = entry.kind == .directory ? "資料夾" : entry.kind == .symlink ? "符號連結" : (entry.name as NSString).pathExtension.uppercased()
             }
-            let text = NSTextField(labelWithString: value); text.font = .systemFont(ofSize: 11); text.textColor = .secondaryLabelColor; return text
+            let text = NSTextField(labelWithString: value); text.font = .systemFont(ofSize: 12); text.textColor = .secondaryLabelColor; return text
         }
         func tableViewSelectionDidChange(_ notification: Notification) {
             guard !reloading else { return }

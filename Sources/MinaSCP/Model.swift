@@ -39,6 +39,9 @@ import Combine
     private var siteStoreReadable = true
     private var workspaceReadable = true
     private var preferencesReadable = true
+    private var appearanceSaveTask: Task<Void, Never>?
+    private var appearanceNeedsSave = false
+    private var managesAppAppearance = false
     private var subscriptions = Set<AnyCancellable>()
     private var tabSubscriptions = Set<AnyCancellable>()
     private let workspaceStore: AtomicStore<WorkspaceDocument>
@@ -105,16 +108,52 @@ import Combine
         do { try workspaceStore.save(WorkspaceDocument(tabs: tabs.map(\.state), selected: selectedTabID)) } catch { self.error = "保存工作區失敗：" + error.localizedDescription }
     }
     func savePreferences() {
+        appearanceSaveTask?.cancel(); appearanceSaveTask = nil
         guard preferencesReadable else { error = "偏好設定讀取失敗，禁止覆寫原檔"; return }
         preferences.concurrentTransfers = max(1, min(8, preferences.concurrentTransfers)); preferences.speedLimit = max(0, preferences.speedLimit)
-        do { try preferencesStore.save(preferences); queue.concurrency = preferences.concurrentTransfers; queue.pump() } catch { self.error = error.localizedDescription }
+        preferences.glassTransparency = Preferences.normalizedTransparency(preferences.glassTransparency)
+        do {
+            try preferencesStore.save(preferences); appearanceNeedsSave = false
+            if queue.concurrency != preferences.concurrentTransfers { queue.concurrency = preferences.concurrentTransfers; queue.pump() }
+        } catch { self.error = error.localizedDescription }
+    }
+    func activateAppAppearance() {
+        managesAppAppearance = true
+        applyAppAppearance()
+    }
+    private func applyAppAppearance() {
+        guard managesAppAppearance, NSApp != nil else { return }
+        NSApp.appearance = preferences.appearanceMode.nsAppearance
+    }
+    func updateAppearance(mode: AppearanceMode? = nil, transparency: Double? = nil) {
+        if let mode { preferences.appearanceMode = mode }
+        if let transparency { preferences.glassTransparency = Preferences.normalizedTransparency(transparency) }
+        applyAppAppearance()
+        appearanceNeedsSave = true
+        appearanceSaveTask?.cancel()
+        appearanceSaveTask = Task { [weak self] in
+            do { try await Task.sleep(for: .milliseconds(300)) } catch { return }
+            self?.flushAppearancePreferences()
+        }
+    }
+    func resetAppearance() { updateAppearance(mode: .light, transparency: 50) }
+    func flushAppearancePreferences() {
+        appearanceSaveTask?.cancel(); appearanceSaveTask = nil
+        guard appearanceNeedsSave else { return }
+        guard preferencesReadable else { error = "偏好設定讀取失敗，禁止覆寫原檔"; return }
+        do { try preferencesStore.save(preferences); appearanceNeedsSave = false }
+        catch { self.error = "保存外觀失敗：" + error.localizedDescription }
+    }
+    func requestPaneFocus(_ target: PaneFocusTarget) {
+        guard let tab = current else { return }
+        NotificationCenter.default.post(name: .minaPaneFocus, object: PaneFocusRequest(tabID: tab.id, side: tab.state.activeSide, target: target))
     }
     private func presentSiteWindow() {
         guard NSApp != nil else { return }
         if siteWindow == nil {
             let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 920, height: 620), styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
             window.title = "MinaSCP — 站台管理"; window.isReleasedWhenClosed = false
-            window.contentViewController = NSHostingController(rootView: SiteManagerView(model: self).preferredColorScheme(.light))
+            window.contentViewController = NSHostingController(rootView: SiteManagerView(model: self).minaWindowAppearance(model: self))
             window.center(); siteWindow = window
         }
         siteWindow?.makeKeyAndOrderFront(nil)
