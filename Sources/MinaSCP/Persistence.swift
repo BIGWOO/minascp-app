@@ -14,7 +14,7 @@ struct AtomicStore<Value: Codable> {
     }
 }
 enum AppStoragePaths {
-    static let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("com.mina.scp")
+    static let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(Bundle.main.object(forInfoDictionaryKey: "MinaUpdateTestBuild") as? Bool == true ? "com.mina.scp.update-test" : "com.mina.scp")
 }
 enum AuthenticationMethod: String, Codable, CaseIterable { case key = "SSH 金鑰", agent = "SSH Agent", password = "密碼", interactive = "互動驗證" }
 enum AppearanceMode: String, Codable, CaseIterable {

@@ -5,3 +5,5 @@ build/
 .local-sftp/
 output/
 dist/
+
+__pycache__/

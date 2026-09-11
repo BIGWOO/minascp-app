@@ -3,8 +3,19 @@ import AppKit
 
 final class MinaAppDelegate: NSObject, NSApplicationDelegate {
     weak var model: BrowserModel?
+    weak var updates: UpdateController?
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard let model else { return .terminateNow }
+        if let updates, updates.protectsTermination {
+            if updates.mustDelayTermination {
+                updates.deferApprovedTerminationIfBusy()
+                updates.report("更新尚未重新啟動", "請先完成工作，再於更新視窗或 MinaSCP 選單確認安裝並重新啟動。")
+                return .terminateCancel
+            }
+            model.flushAppearancePreferences(); model.saveWorkspace(); model.savePreferences()
+            model.tabs.forEach { $0.disconnect() }
+            return .terminateNow
+        }
         if model.propertyEditor?.busy == true { Dialogs.info("屬性操作仍在進行", detail: "請等逐項讀回完成後再結束。"); return .terminateCancel }
         if model.commands.activeCount > 0 || model.crossSite.activeCount > 0 { Dialogs.info("進階工作仍在進行", detail: "請先從工作清單停止命令或暫停跨站台複製，再結束程式。"); return .terminateCancel }
         model.flushAppearancePreferences(); model.saveWorkspace(); model.savePreferences()
@@ -18,10 +29,15 @@ final class MinaAppDelegate: NSObject, NSApplicationDelegate {
 @main struct MinaSCPApp: App {
     @NSApplicationDelegateAdaptor(MinaAppDelegate.self) var delegate
     @StateObject private var model = BrowserModel()
+    @StateObject private var updates = UpdateController()
     var body: some Scene {
-        Window("MinaSCP", id: "main") { ContentView(model: model).minaWindowAppearance(model: model).frame(minWidth: 1000, minHeight: 680).onAppear { delegate.model = model; model.activateAppAppearance() } }
+        Window("MinaSCP", id: "main") { ContentView(model: model).minaWindowAppearance(model: model).frame(minWidth: 1000, minHeight: 680).onAppear { delegate.model = model; delegate.updates = updates; updates.model = model; model.activateAppAppearance() } }
             .defaultSize(width: 1320, height: 850)
             .commands {
+                CommandGroup(after: .appInfo) {
+                    Button(updates.pendingRestart ? "安裝更新並重新啟動…" : "檢查更新…") { updates.checkForUpdates() }
+                        .disabled(!updates.canCheck && !updates.pendingRestart)
+                }
                 CommandGroup(replacing: .newItem) {
                     Button("站台管理…") { model.showConnection = true }.keyboardShortcut("n", modifiers: .command)
                     Button("重新整理") { model.refreshLocal(); model.refreshRemote() }.keyboardShortcut("r", modifiers: .command)

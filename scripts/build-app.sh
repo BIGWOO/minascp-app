@@ -3,6 +3,13 @@ set -eu
 cd "${0:A:h:h}"
 configuration="${1:-debug}"
 [[ "$configuration" == debug || "$configuration" == release ]] || { print -u2 'Usage: build-app.sh [debug|release]'; exit 1; }
+# Unsigned developer builds remain usable; release builds must carry a valid update key.
+export MINASCP_VERSION="${MINASCP_VERSION:-1.1.0}"
+export MINASCP_BUILD="${MINASCP_BUILD:-260911.1}"
+export MINASCP_FEED_URL="${MINASCP_FEED_URL:-https://github.com/BIGWOO/minascp-app/releases/latest/download/appcast.xml}"
+export MINASCP_UPDATE_PUBLIC_KEY="${MINASCP_UPDATE_PUBLIC_KEY:-}"
+export MINASCP_UPDATE_TEST="${MINASCP_UPDATE_TEST:-0}"
+python3 scripts/update-config.py validate "$configuration"
 build_args=(-c "$configuration")
 if [[ "$configuration" == release ]]; then
     build_args+=(--arch arm64 --arch x86_64)
@@ -29,14 +36,20 @@ cat > "$app/Contents/Info.plist" <<'PLIST'
 <key>CFBundleIdentifier</key><string>com.mina.scp</string>
 <key>CFBundleName</key><string>MinaSCP</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>1.0.0</string>
-<key>CFBundleVersion</key><string>260911</string>
 <key>CFBundleIconFile</key><string>AppIcon</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 <key>NSPrincipalClass</key><string>NSApplication</string>
 <key>NSHighResolutionCapable</key><true/>
 </dict></plist>
 PLIST
+python3 scripts/update-config.py plist "$app/Contents/Info.plist"
+framework=.build/artifacts/sparkle/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/Sparkle.framework
+mkdir -p "$app/Contents/Frameworks"
+ditto "$framework" "$app/Contents/Frameworks/Sparkle.framework"
+cp .build/artifacts/sparkle/Sparkle/LICENSE "$app/Contents/Resources/Sparkle-LICENSE"
+# Preserve Sparkle's upstream nested signatures. Ad-hoc signing the enclosing app
+# does not require replacing the framework's Developer ID signatures.
+codesign --verify --deep --strict "$app/Contents/Frameworks/Sparkle.framework"
 codesign --force --sign - "$app/Contents/MacOS/MinaSCPAskPass"
 codesign --force --sign - "$app"
 codesign --verify --deep --strict "$app"
