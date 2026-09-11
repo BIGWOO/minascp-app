@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Debug MinaSCP",
+            "target": "MinaSCP",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug MinaSCP"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Release MinaSCP",
+            "target": "MinaSCP",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release MinaSCP"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Debug MinaSCPAskPass",
+            "target": "MinaSCPAskPass",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug MinaSCPAskPass"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "name": "Release MinaSCPAskPass",
+            "target": "MinaSCPAskPass",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release MinaSCPAskPass"
+        }
+    ]
+}
