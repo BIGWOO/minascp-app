@@ -44,7 +44,7 @@ struct ContentView: View {
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 16) {
-                Label("MinaSCP", systemImage: "arrow.up.arrow.down.square.fill").font(.headline).foregroundStyle(.blue).padding(.top, 12)
+                Label { Text("MinaSCP") } icon: { Image(nsImage: NSImage(named: "AppIcon") ?? NSImage()).resizable().scaledToFit().frame(width: 24, height: 24) }.font(.headline).foregroundStyle(.blue).padding(.top, 12)
                 HStack { Text("站台").font(.caption).foregroundStyle(.secondary); Spacer(); Button { model.newSite() } label: { Image(systemName: "plus") }.buttonStyle(.plain) }
                 TextField("搜尋站台", text: $model.siteSearch).textFieldStyle(.roundedBorder)
                 ScrollView {

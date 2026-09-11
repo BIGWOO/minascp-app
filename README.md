@@ -1,4 +1,4 @@
-# MinaSCP 0.4
+# MinaSCP 1.0.0 (260911)
 
 原生 macOS 14+ SFTP 日用工具，以 SwiftUI／AppKit 建立明亮、緊湊的 Commander 雙欄介面。使用系統 OpenSSH 的持續 SFTP v3 二進位通道，不再解析 `ls` 文字。
 
@@ -6,7 +6,7 @@
 
 ```sh
 ./scripts/build-app.sh
-open build/MinaSCP.app
+open build/debug/MinaSCP.app
 
 swift test
 MINASCP_DOCKER=1 MINASCP_DOCKER_TEST=1 swift test
@@ -15,7 +15,9 @@ MINASCP_DOCKER_TEST=1 MINASCP_STRESS_TEST=1 swift test
 
 Docker 設定見 [測試環境](test-environment/sftp/README.md)。Docker 測試只連線 loopback：SFTP-only `127.0.0.1:22222` 與獨立命令容器 `127.0.0.1:22224`，壓力測試會傳送 1 GiB 與 1,000 個小檔；一般測試使用 macOS 本機 `sftp-server` 子程序。無第三方 Swift 套件。
 
-產物 `build/MinaSCP.app` 為本機 ad-hoc 簽章版本，含 AskPass helper。未包含公證、安裝程式、自動更新或對外發布。上一版 App 與來源備份保存在 `build/backups/20260910-135744/`。
+開發產物為 `build/debug/MinaSCP.app`。執行 `./scripts/package-release.sh` 建立 Release 最佳化的 Apple Silicon + Intel Universal App、DMG、ZIP 與 SHA-256 清單，產物放在 `dist/`。App 與 AskPass helper 均為 ad-hoc 簽章，尚未經 Apple 公證，無自動更新。
+
+下載：[GitHub Release](https://github.com/BIGWOO/minascp-app/releases/tag/v1.0.0)（需私人 repo 權限）。[安裝說明](docs/INSTALL.md)包含首次開啟與回復步驟。
 
 ## 日常操作
 
@@ -92,7 +94,7 @@ Docker 設定見 [測試環境](test-environment/sftp/README.md)。Docker 測試
 
 ## 驗收與限制
 
-完整實測範圍與人工檢查項目見 [驗收紀錄](docs/acceptance-20260910.md)。本次未連線正式站台，沒有 Git 提交、推送或對外發布。
+完整實測範圍與人工檢查項目見 [驗收紀錄](docs/acceptance-20260910.md)。歷史紀錄描述各次測試當時的狀態；1.0.0 發佈驗證另見 [發佈紀錄](docs/RELEASE-1.0.0.md)。
 
 - 只支援 SFTP；不包含 SCP、FTP/FTPS、WebDAV 或 S3。
 - SFTP v3 沒有伺服器端「內容版本比較後交換」原語：覆蓋前雜湊檢查可偵測已發生的變更，但無法鎖住其他客戶端在最後檢查與改名間的修改。需要多人同時寫入的目錄仍應使用外部版本／鎖定機制。
