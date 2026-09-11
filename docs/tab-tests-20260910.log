@@ -1,0 +1,156 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.09s)
+Test Suite 'All tests' started at 2026-09-10 21:07:23.619.
+Test Suite 'MinaSCPPackageTests.xctest' started at 2026-09-10 21:07:23.620.
+Test Suite 'AdvancedTests' started at 2026-09-10 21:07:23.620.
+Test Case '-[MinaSCPTests.AdvancedTests testArchiveRoundtripsAndHostileMembers]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testArchiveRoundtripsAndHostileMembers]' passed (1.656 seconds).
+Test Case '-[MinaSCPTests.AdvancedTests testCommandManagerCommitCollisionScopeAndPersistence]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testCommandManagerCommitCollisionScopeAndPersistence]' passed (0.378 seconds).
+Test Case '-[MinaSCPTests.AdvancedTests testCrossSiteBothEndpointDisconnectsAndResume]' started.
+/Users/bigwoo/repos-mbp/minascp-app/Tests/MinaSCPTests/AdvancedTests.swift:152: -[MinaSCPTests.AdvancedTests testCrossSiteBothEndpointDisconnectsAndResume] : Test skipped - Explicit loopback container disconnect test
+Test Case '-[MinaSCPTests.AdvancedTests testCrossSiteBothEndpointDisconnectsAndResume]' skipped (0.001 seconds).
+Test Case '-[MinaSCPTests.AdvancedTests testCrossSitePauseCancelRestartAndStagingTamper]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testCrossSitePauseCancelRestartAndStagingTamper]' passed (14.145 seconds).
+Test Case '-[MinaSCPTests.AdvancedTests testCrossSiteRoundtripCollisionCapacityAndSourceChange]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testCrossSiteRoundtripCollisionCapacityAndSourceChange]' passed (2.125 seconds).
+Test Case '-[MinaSCPTests.AdvancedTests testRunnerCapabilitiesOutputAndUncertainStop]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testRunnerCapabilitiesOutputAndUncertainStop]' passed (1.616 seconds).
+Test Case '-[MinaSCPTests.AdvancedTests testTemplateQuotingAndValidation]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testTemplateQuotingAndValidation]' passed (0.090 seconds).
+Test Suite 'AdvancedTests' passed at 2026-09-10 21:07:43.633.
+	 Executed 7 tests, with 1 test skipped and 0 failures (0 unexpected) in 20.012 (20.013) seconds
+Test Suite 'ContextMenuTests' started at 2026-09-10 21:07:43.633.
+Test Case '-[MinaSCPTests.ContextMenuTests testBackgroundDoesNotActOnSelectionAndDisconnectedPathsRemainAvailable]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testBackgroundDoesNotActOnSelectionAndDisconnectedPathsRemainAvailable]' passed (0.068 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testCancelledCopyRetainsSourceAndCanResume]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testCancelledCopyRetainsSourceAndCanResume]' passed (1.011 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testClipboardLocalURLsAndNoCredentials]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testClipboardLocalURLsAndNoCredentials]' passed (0.004 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testClipboardRejectsOtherSiteAndChangedEndpoint]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testClipboardRejectsOtherSiteAndChangedEndpoint]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testDanglingLinkCopyDoesNotFollowTarget]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testDanglingLinkCopyDoesNotFollowTarget]' passed (0.011 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testDockerRemoteBatchPropertiesAndReadback]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testDockerRemoteBatchPropertiesAndReadback]' passed (0.331 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testMultiSelectionAndCapturedTarget]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testMultiSelectionAndCapturedTarget]' passed (0.002 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testPasteInSameDirectoryCreatesAlternativeWithoutChangingSource]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testPasteInSameDirectoryCreatesAlternativeWithoutChangingSource]' passed (0.004 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testPermissionPatchPreservesUneditedBitsAndOwnership]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testPermissionPatchPreservesUneditedBitsAndOwnership]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testPropertiesRecursiveSkipLinkAndRestore]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testPropertiesRecursiveSkipLinkAndRestore]' passed (0.007 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testRemoteCopyUsesSFTPAndDoesNotOverwrite]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testRemoteCopyUsesSFTPAndDoesNotOverwrite]' passed (0.017 seconds).
+Test Case '-[MinaSCPTests.ContextMenuTests testSameSideConflictRenameAndMoveAndSelfProtection]' started.
+Test Case '-[MinaSCPTests.ContextMenuTests testSameSideConflictRenameAndMoveAndSelfProtection]' passed (0.004 seconds).
+Test Suite 'ContextMenuTests' passed at 2026-09-10 21:07:45.093.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 1.459 (1.460) seconds
+Test Suite 'EditingTests' started at 2026-09-10 21:07:45.093.
+Test Case '-[MinaSCPTests.EditingTests testAskPassHelperSocketExchange]' started.
+Test Case '-[MinaSCPTests.EditingTests testAskPassHelperSocketExchange]' passed (0.071 seconds).
+Test Case '-[MinaSCPTests.EditingTests testAtomicSavesConflictAndRestartRetainsCopy]' started.
+Test Case '-[MinaSCPTests.EditingTests testAtomicSavesConflictAndRestartRetainsCopy]' passed (2.091 seconds).
+Test Case '-[MinaSCPTests.EditingTests testReopeningPausedCopyResumesUpload]' started.
+Test Case '-[MinaSCPTests.EditingTests testReopeningPausedCopyResumesUpload]' passed (2.057 seconds).
+Test Suite 'EditingTests' passed at 2026-09-10 21:07:49.313.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 4.220 (4.220) seconds
+Test Suite 'SFTPProtocolTests' started at 2026-09-10 21:07:49.313.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testFramingSplitAndCoalescedPackets]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testFramingSplitAndCoalescedPackets]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.SFTPProtocolTests testMalformedPacketsFailClosed]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testMalformedPacketsFailClosed]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.SFTPProtocolTests testNoOverwriteAndSymlinkRemoval]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testNoOverwriteAndSymlinkRemoval]' passed (0.009 seconds).
+Test Case '-[MinaSCPTests.SFTPProtocolTests testRealSubsystemListAndConcurrentRequests]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testRealSubsystemListAndConcurrentRequests]' passed (0.006 seconds).
+Test Suite 'SFTPProtocolTests' passed at 2026-09-10 21:07:49.329.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.016 (0.016) seconds
+Test Suite 'SiteTests' started at 2026-09-10 21:07:49.329.
+Test Case '-[MinaSCPTests.SiteTests testCorruptStoreIsNotSilentlyDiscarded]' started.
+Test Case '-[MinaSCPTests.SiteTests testCorruptStoreIsNotSilentlyDiscarded]' passed (0.001 seconds).
+Test Case '-[MinaSCPTests.SiteTests testSitesSurviveRestartAndCanUpdateAndDelete]' started.
+Test Case '-[MinaSCPTests.SiteTests testSitesSurviveRestartAndCanUpdateAndDelete]' passed (0.006 seconds).
+Test Suite 'SiteTests' passed at 2026-09-10 21:07:49.336.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.006 (0.007) seconds
+Test Suite 'StressTests' started at 2026-09-10 21:07:49.336.
+Test Case '-[MinaSCPTests.StressTests testCancelStopsIOAndResumesVerifiedPartial]' started.
+Test Case '-[MinaSCPTests.StressTests testCancelStopsIOAndResumesVerifiedPartial]' passed (0.927 seconds).
+Test Case '-[MinaSCPTests.StressTests testDockerGiBAndThousandFiles]' started.
+/Users/bigwoo/repos-mbp/minascp-app/Tests/MinaSCPTests/StressTests.swift:6: -[MinaSCPTests.StressTests testDockerGiBAndThousandFiles] : Test skipped - Explicit 1 GiB and 1000-file Docker test
+Test Case '-[MinaSCPTests.StressTests testDockerGiBAndThousandFiles]' skipped (0.000 seconds).
+Test Suite 'StressTests' passed at 2026-09-10 21:07:50.264.
+	 Executed 2 tests, with 1 test skipped and 0 failures (0 unexpected) in 0.928 (0.928) seconds
+Test Suite 'TabTests' started at 2026-09-10 21:07:50.264.
+Test Case '-[MinaSCPTests.TabTests testCopiedInfoUsesSnapshotAndExcludesSecrets]' started.
+Test Case '-[MinaSCPTests.TabTests testCopiedInfoUsesSnapshotAndExcludesSecrets]' passed (0.009 seconds).
+Test Case '-[MinaSCPTests.TabTests testDockerIndependentDuplicateMetadataAndCommandCloseGuard]' started.
+Test Case '-[MinaSCPTests.TabTests testDockerIndependentDuplicateMetadataAndCommandCloseGuard]' passed (0.810 seconds).
+Test Case '-[MinaSCPTests.TabTests testIndependentTransferConfirmationDoesNotStopIO]' started.
+Test Case '-[MinaSCPTests.TabTests testIndependentTransferConfirmationDoesNotStopIO]' passed (1.023 seconds).
+Test Case '-[MinaSCPTests.TabTests testLegacyWorkspaceAliasColorDuplicationAndSave]' started.
+Test Case '-[MinaSCPTests.TabTests testLegacyWorkspaceAliasColorDuplicationAndSave]' passed (0.009 seconds).
+Test Case '-[MinaSCPTests.TabTests testLocalTabListingUsesPOSIXMetadataWithoutFollowingLinks]' started.
+Test Case '-[MinaSCPTests.TabTests testLocalTabListingUsesPOSIXMetadataWithoutFollowingLinks]' passed (0.001 seconds).
+Test Case '-[MinaSCPTests.TabTests testMalformedOrOversizedDiagnosticsDoNotInventFields]' started.
+Test Case '-[MinaSCPTests.TabTests testMalformedOrOversizedDiagnosticsDoNotInventFields]' passed (0.003 seconds).
+Test Case '-[MinaSCPTests.TabTests testNegotiationParserSplitStreamsAndSensitiveFields]' started.
+Test Case '-[MinaSCPTests.TabTests testNegotiationParserSplitStreamsAndSensitiveFields]' passed (0.002 seconds).
+Test Case '-[MinaSCPTests.TabTests testPropertyWriteBlocksBatchCloseUntilReadback]' started.
+Test Case '-[MinaSCPTests.TabTests testPropertyWriteBlocksBatchCloseUntilReadback]' passed (0.032 seconds).
+Test Case '-[MinaSCPTests.TabTests testProxyAndAmbiguousNegotiationsRemainUnknown]' started.
+Test Case '-[MinaSCPTests.TabTests testProxyAndAmbiguousNegotiationsRemainUnknown]' passed (0.001 seconds).
+Test Case '-[MinaSCPTests.TabTests testSiteDraftPreservesSourceAndCurrentPaths]' started.
+Test Case '-[MinaSCPTests.TabTests testSiteDraftPreservesSourceAndCurrentPaths]' passed (0.002 seconds).
+Test Case '-[MinaSCPTests.TabTests testTargetedCloseOrderAndBatchEdges]' started.
+Test Case '-[MinaSCPTests.TabTests testTargetedCloseOrderAndBatchEdges]' passed (0.008 seconds).
+Test Suite 'TabTests' passed at 2026-09-10 21:07:52.166.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 1.900 (1.902) seconds
+Test Suite 'TransferEngineTests' started at 2026-09-10 21:07:52.166.
+Test Case '-[MinaSCPTests.TransferEngineTests testCollisionRequiresDecisionAndSkipPreservesFile]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testCollisionRequiresDecisionAndSkipPreservesFile]' passed (0.004 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testDirectoryRoundTripAndSymlinkWithoutFollowing]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testDirectoryRoundTripAndSymlinkWithoutFollowing]' passed (0.019 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testDockerRoundTrip]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testDockerRoundTrip]' passed (0.389 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testResumeValidatesWholeSourceAndPartialPrefix]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testResumeValidatesWholeSourceAndPartialPrefix]' passed (0.030 seconds).
+Test Suite 'TransferEngineTests' passed at 2026-09-10 21:07:52.609.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.443 (0.443) seconds
+Test Suite 'TransportTests' started at 2026-09-10 21:07:52.609.
+Test Case '-[MinaSCPTests.TransportTests testFinderPromiseWritesRequestedDestination]' started.
+Test Case '-[MinaSCPTests.TransportTests testFinderPromiseWritesRequestedDestination]' passed (0.008 seconds).
+Test Case '-[MinaSCPTests.TransportTests testInvalidConnection]' started.
+Test Case '-[MinaSCPTests.TransportTests testInvalidConnection]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.TransportTests testLocalUnicodeAndFolderListing]' started.
+Test Case '-[MinaSCPTests.TransportTests testLocalUnicodeAndFolderListing]' passed (0.001 seconds).
+Test Suite 'TransportTests' passed at 2026-09-10 21:07:52.617.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Test Suite 'WorkflowTests' started at 2026-09-10 21:07:52.617.
+Test Case '-[MinaSCPTests.WorkflowTests testCommitRacePreservesNewDestination]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testCommitRacePreservesNewDestination]' passed (0.005 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testDockerReadOnlyDestination]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testDockerReadOnlyDestination]' passed (0.161 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testMigrationBackupAndImportReadOnly]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testMigrationBackupAndImportReadOnly]' passed (0.002 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testMoveRefusesSkippedOrChangedSource]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testMoveRefusesSkippedOrChangedSource]' passed (0.016 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testSyncConflictsExclusionsAndNoImplicitDeletion]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testSyncConflictsExclusionsAndNoImplicitDeletion]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testWorkspaceRestoresDisconnectedAndQueuePaused]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testWorkspaceRestoresDisconnectedAndQueuePaused]' passed (0.002 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testWrongHostKeyBlocksConnection]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testWrongHostKeyBlocksConnection]' passed (0.012 seconds).
+Test Suite 'WorkflowTests' passed at 2026-09-10 21:07:52.816.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.198 (0.199) seconds
+Test Suite 'MinaSCPPackageTests.xctest' passed at 2026-09-10 21:07:52.816.
+	 Executed 55 tests, with 2 tests skipped and 0 failures (0 unexpected) in 29.190 (29.197) seconds
+Test Suite 'All tests' passed at 2026-09-10 21:07:52.816.
+	 Executed 55 tests, with 2 tests skipped and 0 failures (0 unexpected) in 29.190 (29.197) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

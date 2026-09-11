@@ -1,0 +1,11 @@
+name: minascp-commands-test
+services:
+  commands:
+    build: ./test-environment/commands
+    ports:
+      - "127.0.0.1:22224:22"
+    volumes:
+      - ./.local-sftp/advanced/hostkeys:/hostkeys
+      - ./.local-sftp/keys/id_ed25519.pub:/etc/ssh/test_authorized_keys:ro
+      - ./.local-sftp/advanced/data:/data
+    restart: "no"

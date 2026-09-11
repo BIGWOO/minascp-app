@@ -1,0 +1,11 @@
+name: minascp-test
+services:
+  sftp:
+    build: ./test-environment/sftp
+    ports:
+      - "127.0.0.1:22222:22"
+    volumes:
+      - ./.local-sftp/keys/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key:ro
+      - ./.local-sftp/keys/id_ed25519.pub:/etc/ssh/test_authorized_keys:ro
+      - ./.local-sftp/data:/data
+    restart: "no"

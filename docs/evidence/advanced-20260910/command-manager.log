@@ -1,0 +1,27 @@
+Building for debugging...
+[0/7] Write sources
+[1/7] Write swift-version--58304C5D6DBC2206.txt
+[3/7] Compiling MinaSCP CommandManager.swift
+[4/7] Emitting module MinaSCP
+[4/9] Write Objects.LinkFileList
+[5/9] Linking MinaSCP
+[6/9] Applying MinaSCP
+[8/10] Emitting module MinaSCPTests
+[8/10] Write Objects.LinkFileList
+[9/10] Linking MinaSCPPackageTests
+Build complete! (1.93s)
+Test Suite 'Selected tests' started at 2026-09-10 18:45:41.991.
+Test Suite 'MinaSCPPackageTests.xctest' started at 2026-09-10 18:45:41.992.
+Test Suite 'AdvancedTests' started at 2026-09-10 18:45:41.992.
+Test Case '-[MinaSCPTests.AdvancedTests testCommandManagerCommitCollisionScopeAndPersistence]' started.
+Test Case '-[MinaSCPTests.AdvancedTests testCommandManagerCommitCollisionScopeAndPersistence]' passed (0.399 seconds).
+Test Suite 'AdvancedTests' passed at 2026-09-10 18:45:42.391.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.399 (0.399) seconds
+Test Suite 'MinaSCPPackageTests.xctest' passed at 2026-09-10 18:45:42.391.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.399 (0.400) seconds
+Test Suite 'Selected tests' passed at 2026-09-10 18:45:42.391.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.399 (0.400) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,42 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.10s)
+Test Suite 'Selected tests' started at 2026-09-10 18:37:32.518.
+Test Suite 'MinaSCPPackageTests.xctest' started at 2026-09-10 18:37:32.518.
+Test Suite 'TransferEngineTests' started at 2026-09-10 18:37:32.518.
+Test Case '-[MinaSCPTests.TransferEngineTests testCollisionRequiresDecisionAndSkipPreservesFile]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testCollisionRequiresDecisionAndSkipPreservesFile]' passed (0.008 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testDirectoryRoundTripAndSymlinkWithoutFollowing]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testDirectoryRoundTripAndSymlinkWithoutFollowing]' passed (0.020 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testDockerRoundTrip]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testDockerRoundTrip]' passed (0.346 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testResumeValidatesWholeSourceAndPartialPrefix]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testResumeValidatesWholeSourceAndPartialPrefix]' passed (0.035 seconds).
+Test Suite 'TransferEngineTests' passed at 2026-09-10 18:37:32.927.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.408 (0.408) seconds
+Test Suite 'WorkflowTests' started at 2026-09-10 18:37:32.927.
+Test Case '-[MinaSCPTests.WorkflowTests testCommitRacePreservesNewDestination]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testCommitRacePreservesNewDestination]' passed (0.006 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testDockerReadOnlyDestination]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testDockerReadOnlyDestination]' passed (0.165 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testMigrationBackupAndImportReadOnly]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testMigrationBackupAndImportReadOnly]' passed (0.004 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testMoveRefusesSkippedOrChangedSource]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testMoveRefusesSkippedOrChangedSource]' passed (0.023 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testSyncConflictsExclusionsAndNoImplicitDeletion]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testSyncConflictsExclusionsAndNoImplicitDeletion]' passed (0.001 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testWorkspaceRestoresDisconnectedAndQueuePaused]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testWorkspaceRestoresDisconnectedAndQueuePaused]' passed (0.005 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testWrongHostKeyBlocksConnection]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testWrongHostKeyBlocksConnection]' passed (0.013 seconds).
+Test Suite 'WorkflowTests' passed at 2026-09-10 18:37:33.145.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.218 (0.218) seconds
+Test Suite 'MinaSCPPackageTests.xctest' passed at 2026-09-10 18:37:33.145.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.626 (0.627) seconds
+Test Suite 'Selected tests' passed at 2026-09-10 18:37:33.145.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.626 (0.627) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

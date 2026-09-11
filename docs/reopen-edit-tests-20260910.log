@@ -1,0 +1,32 @@
+Building for debugging...
+[0/8] Write sources
+[2/8] Write swift-version--58304C5D6DBC2206.txt
+[4/8] Compiling MinaSCP RemoteEditing.swift
+[5/8] Emitting module MinaSCP
+[5/10] Write Objects.LinkFileList
+[6/10] Linking MinaSCP
+[7/10] Applying MinaSCP
+[9/12] Compiling MinaSCPTests EditingTests.swift
+[10/12] Emitting module MinaSCPTests
+[10/12] Write Objects.LinkFileList
+[11/12] Linking MinaSCPPackageTests
+Build complete! (2.76s)
+Test Suite 'Selected tests' started at 2026-09-10 16:37:19.371.
+Test Suite 'MinaSCPPackageTests.xctest' started at 2026-09-10 16:37:19.372.
+Test Suite 'EditingTests' started at 2026-09-10 16:37:19.372.
+Test Case '-[MinaSCPTests.EditingTests testAskPassHelperSocketExchange]' started.
+Test Case '-[MinaSCPTests.EditingTests testAskPassHelperSocketExchange]' passed (0.083 seconds).
+Test Case '-[MinaSCPTests.EditingTests testAtomicSavesConflictAndRestartRetainsCopy]' started.
+Test Case '-[MinaSCPTests.EditingTests testAtomicSavesConflictAndRestartRetainsCopy]' passed (2.201 seconds).
+Test Case '-[MinaSCPTests.EditingTests testReopeningPausedCopyResumesUpload]' started.
+Test Case '-[MinaSCPTests.EditingTests testReopeningPausedCopyResumesUpload]' passed (2.073 seconds).
+Test Suite 'EditingTests' passed at 2026-09-10 16:37:23.730.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 4.357 (4.357) seconds
+Test Suite 'MinaSCPPackageTests.xctest' passed at 2026-09-10 16:37:23.730.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 4.357 (4.358) seconds
+Test Suite 'Selected tests' passed at 2026-09-10 16:37:23.730.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 4.357 (4.359) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

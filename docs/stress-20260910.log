@@ -1,0 +1,75 @@
+[0/1] Planning build
+Building for debugging...
+[0/8] Write sources
+[1/8] Write swift-version--58304C5D6DBC2206.txt
+[3/6] Compiling MinaSCPTests StressTests.swift
+[4/6] Emitting module MinaSCPTests
+[4/6] Write Objects.LinkFileList
+[5/6] Linking MinaSCPPackageTests
+Build complete! (0.69s)
+Test Suite 'All tests' started at 2026-09-10 14:37:24.158.
+Test Suite 'MinaSCPPackageTests.xctest' started at 2026-09-10 14:37:24.158.
+Test Suite 'SFTPProtocolTests' started at 2026-09-10 14:37:24.158.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testFramingSplitAndCoalescedPackets]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testFramingSplitAndCoalescedPackets]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.SFTPProtocolTests testMalformedPacketsFailClosed]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testMalformedPacketsFailClosed]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.SFTPProtocolTests testNoOverwriteAndSymlinkRemoval]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testNoOverwriteAndSymlinkRemoval]' passed (0.005 seconds).
+Test Case '-[MinaSCPTests.SFTPProtocolTests testRealSubsystemListAndConcurrentRequests]' started.
+Test Case '-[MinaSCPTests.SFTPProtocolTests testRealSubsystemListAndConcurrentRequests]' passed (0.004 seconds).
+Test Suite 'SFTPProtocolTests' passed at 2026-09-10 14:37:24.168.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.010 (0.010) seconds
+Test Suite 'SiteTests' started at 2026-09-10 14:37:24.168.
+Test Case '-[MinaSCPTests.SiteTests testCorruptStoreIsNotSilentlyDiscarded]' started.
+Test Case '-[MinaSCPTests.SiteTests testCorruptStoreIsNotSilentlyDiscarded]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.SiteTests testSitesSurviveRestartAndCanUpdateAndDelete]' started.
+Test Case '-[MinaSCPTests.SiteTests testSitesSurviveRestartAndCanUpdateAndDelete]' passed (0.008 seconds).
+Test Suite 'SiteTests' passed at 2026-09-10 14:37:24.177.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.009 (0.009) seconds
+Test Suite 'StressTests' started at 2026-09-10 14:37:24.177.
+Test Case '-[MinaSCPTests.StressTests testCancelStopsIOAndResumesVerifiedPartial]' started.
+Test Case '-[MinaSCPTests.StressTests testCancelStopsIOAndResumesVerifiedPartial]' passed (0.962 seconds).
+Test Case '-[MinaSCPTests.StressTests testDockerGiBAndThousandFiles]' started.
+Test Case '-[MinaSCPTests.StressTests testDockerGiBAndThousandFiles]' passed (104.335 seconds).
+Test Suite 'StressTests' passed at 2026-09-10 14:39:09.475.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 105.297 (105.298) seconds
+Test Suite 'TransferEngineTests' started at 2026-09-10 14:39:09.475.
+Test Case '-[MinaSCPTests.TransferEngineTests testCollisionRequiresDecisionAndSkipPreservesFile]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testCollisionRequiresDecisionAndSkipPreservesFile]' passed (0.008 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testDirectoryRoundTripAndSymlinkWithoutFollowing]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testDirectoryRoundTripAndSymlinkWithoutFollowing]' passed (0.019 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testDockerRoundTrip]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testDockerRoundTrip]' passed (0.371 seconds).
+Test Case '-[MinaSCPTests.TransferEngineTests testResumeValidatesWholeSourceAndPartialPrefix]' started.
+Test Case '-[MinaSCPTests.TransferEngineTests testResumeValidatesWholeSourceAndPartialPrefix]' passed (0.061 seconds).
+Test Suite 'TransferEngineTests' passed at 2026-09-10 14:39:09.934.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.459 (0.459) seconds
+Test Suite 'TransportTests' started at 2026-09-10 14:39:09.934.
+Test Case '-[MinaSCPTests.TransportTests testFinderPromiseWritesRequestedDestination]' started.
+Test Case '-[MinaSCPTests.TransportTests testFinderPromiseWritesRequestedDestination]' passed (0.043 seconds).
+Test Case '-[MinaSCPTests.TransportTests testInvalidConnection]' started.
+Test Case '-[MinaSCPTests.TransportTests testInvalidConnection]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.TransportTests testLocalUnicodeAndFolderListing]' started.
+Test Case '-[MinaSCPTests.TransportTests testLocalUnicodeAndFolderListing]' passed (0.001 seconds).
+Test Suite 'TransportTests' passed at 2026-09-10 14:39:09.978.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.044 (0.044) seconds
+Test Suite 'WorkflowTests' started at 2026-09-10 14:39:09.978.
+Test Case '-[MinaSCPTests.WorkflowTests testMigrationBackupAndImportReadOnly]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testMigrationBackupAndImportReadOnly]' passed (0.001 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testMoveRefusesSkippedOrChangedSource]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testMoveRefusesSkippedOrChangedSource]' passed (0.009 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testSyncConflictsExclusionsAndNoImplicitDeletion]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testSyncConflictsExclusionsAndNoImplicitDeletion]' passed (0.000 seconds).
+Test Case '-[MinaSCPTests.WorkflowTests testWorkspaceRestoresDisconnectedAndQueuePaused]' started.
+Test Case '-[MinaSCPTests.WorkflowTests testWorkspaceRestoresDisconnectedAndQueuePaused]' passed (0.002 seconds).
+Test Suite 'WorkflowTests' passed at 2026-09-10 14:39:09.991.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.012 (0.012) seconds
+Test Suite 'MinaSCPPackageTests.xctest' passed at 2026-09-10 14:39:09.991.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 105.830 (105.832) seconds
+Test Suite 'All tests' passed at 2026-09-10 14:39:09.991.
+	 Executed 19 tests, with 0 failures (0 unexpected) in 105.830 (105.833) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
