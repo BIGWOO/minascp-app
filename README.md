@@ -14,9 +14,9 @@
 
 </div>
 
-![MinaSCP 情境示意：網站檔案管理、右鍵選單與背景傳輸](docs/images/workspace-scenario.png)
+![MinaSCP 新版玻璃 UI：Monterey 桌布、原生 macOS 桌面與雙欄工作區](docs/images/workspace-glass-monterey.png)
 
-<p align="center"><sub>依實際介面製作的 AI 情境示意圖 · 站台與檔案為虛構範例</sub></p>
+<p align="center"><sub>依新版 UI 製作的網站維護 Demo，站台與檔案為虛構情境 · AI 合成桌面展示，非原始螢幕截圖 · <a href="docs/images/glass-light-20260911.jpg">查看實際 UI</a> · <a href="https://media.512pixels.net/downloads/macos-wallpapers-6k/12-Monterey-Light.jpg">Monterey Light 桌布來源</a></sub></p>
 
 ## 讓檔案工作保持順手
 
