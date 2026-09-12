@@ -10,7 +10,7 @@
 
 **macOS 14+** &nbsp; · &nbsp; **Apple Silicon + Intel** &nbsp; · &nbsp; **SFTP over SSH**
 
-[**下載 1.0.0 →**](https://github.com/BIGWOO/minascp-app/releases/tag/v1.0.0) &nbsp; · &nbsp; [安裝指南](docs/INSTALL.md) &nbsp; · &nbsp; [使用指南](docs/USER-GUIDE.md)
+[**下載最新版 →**](https://github.com/BIGWOO/minascp-app/releases/latest) &nbsp; · &nbsp; [安裝指南](docs/INSTALL.md) &nbsp; · &nbsp; [使用指南](docs/USER-GUIDE.md)
 
 </div>
 
@@ -34,7 +34,7 @@
 
 ## 開始使用
 
-1. 從 [GitHub Release](https://github.com/BIGWOO/minascp-app/releases/tag/v1.0.0) 下載 DMG 或 ZIP，將 App 放入 Applications。
+1. 從 [GitHub 最新正式版](https://github.com/BIGWOO/minascp-app/releases/latest) 下載 DMG 或 ZIP，將 App 放入 Applications。
 2. 開啟「站台管理」，填入主機、使用者與 SSH 驗證方式。
 3. 核對主機指紋後連線，即可從雙欄介面操作檔案。
 
@@ -44,6 +44,6 @@
 
 - [**使用指南**](docs/USER-GUIDE.md) — 快捷鍵、傳輸、編輯、同步與操作限制。
 - [**開發與測試**](docs/DEVELOPMENT.md) — 本機建置、Docker 驗證與發佈打包。
-- [**1.0.0 發佈紀錄**](docs/RELEASE-1.0.0.md) — 版本內容與實際驗證範圍。
+- [**最新發佈紀錄**](https://github.com/BIGWOO/minascp-app/releases/latest) — 版本內容與實際驗證範圍。
 
 <sub>MinaSCP 專注於 SFTP，不提供 SCP、FTP、WebDAV 或 S3。刪除與覆蓋需要明確確認；詳細保護機制與限制請見使用指南。</sub>
