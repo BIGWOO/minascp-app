@@ -48,6 +48,7 @@ export MINASCP_RELEASE_NOTES=docs/RELEASE-1.1.0.md
 
 1. 完成本機驗收、正式金鑰備份與版本核對，再準備正式產物。保留前版 App 與資料備份。
 2. 經授權建立 tag／Release，先放齊所有資產與內文，最後才將穩定版設為 Latest。不要上傳 `MINASCP_UPDATE_TEST=1` 產物。
+   README 的下載與最新發佈紀錄均使用固定的 `releases/latest` 網址，會隨 Latest 指向自動更新，不需手動修改版本號。歷史版本文件保留原版本；發布後確認 README 的入口導向本次正式版。
 3. 從 GitHub 固定 Latest 網址獨立下載 appcast，確認版本、最低 OS、資產 URL、簽章與長度，再下載 ZIP／Markdown 比對雜湊及簽章。測試已安裝的前版能更新、重新開啟，設定仍在。
 4. 發現問題時，將 Latest 指回包含有效 appcast 的安全版本，或發布已重新簽署、移除問題版本的清單。已更新者不強制降版；需要回復時結束 App，保留問題版副本並手動安裝保留的舊版。設定備份另行還原，避免覆蓋使用者最新資料。
 
