@@ -4,8 +4,8 @@ cd "${0:A:h:h}"
 configuration="${1:-debug}"
 [[ "$configuration" == debug || "$configuration" == release ]] || { print -u2 'Usage: build-app.sh [debug|release]'; exit 1; }
 # Unsigned developer builds remain usable; release builds must carry a valid update key.
-export MINASCP_VERSION="${MINASCP_VERSION:-1.1.0}"
-export MINASCP_BUILD="${MINASCP_BUILD:-260911.1}"
+export MINASCP_VERSION="${MINASCP_VERSION:-1.2.0}"
+export MINASCP_BUILD="${MINASCP_BUILD:-260921.1}"
 export MINASCP_FEED_URL="${MINASCP_FEED_URL:-https://github.com/BIGWOO/minascp-app/releases/latest/download/appcast.xml}"
 export MINASCP_UPDATE_PUBLIC_KEY="${MINASCP_UPDATE_PUBLIC_KEY:-}"
 export MINASCP_UPDATE_TEST="${MINASCP_UPDATE_TEST:-0}"
@@ -54,7 +54,14 @@ codesign --force --sign - "$app/Contents/MacOS/MinaSCPAskPass"
 codesign --force --sign - "$app"
 codesign --verify --deep --strict "$app"
 if [[ -d "build/$configuration/MinaSCP.app" ]]; then
-    mv "build/$configuration/MinaSCP.app" "build/$configuration/MinaSCP-previous-$(date +%Y%m%d-%H%M%S).app"
+    mv "build/$configuration/MinaSCP.app" "$staging/previous.app"
 fi
-mv "$app" "build/$configuration/MinaSCP.app"
+if ! mv "$app" "build/$configuration/MinaSCP.app"; then
+    # Restore the previous app if publishing the verified replacement fails.
+    if [[ -d "$staging/previous.app" ]]; then
+        mv "$staging/previous.app" "build/$configuration/MinaSCP.app"
+    fi
+    exit 1
+fi
+# The EXIT trap removes the previous app only after the new app is installed.
 print "Built: build/$configuration/MinaSCP.app"
