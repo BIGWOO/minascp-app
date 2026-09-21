@@ -7,6 +7,7 @@ struct FilePane: View {
     @State private var pathInput = ""
     @State private var editingPath = false
     @State private var showingFilter = false
+    @State private var showingLocations = false
     @FocusState private var focusedField: Field?
     private enum Field: Hashable { case path, filter }
     private var side: PanelSide { remote ? .remote : .local }
@@ -24,6 +25,7 @@ struct FilePane: View {
         }
         .frame(minWidth: 320)
         .background(Color.primary.opacity(active ? 0.025 : 0.012), in: RoundedRectangle(cornerRadius: 14))
+        .sheet(isPresented: $showingLocations) { LocationPresetsView(model: model, tab: tab, remote: remote) }
         .onAppear { pathInput = panel.path; showingFilter = !panel.filter.isEmpty }
         .onChange(of: panel.path) { _, path in pathInput = path }
         .onChange(of: focusedField) { _, field in
@@ -53,6 +55,7 @@ struct FilePane: View {
                     .background(Color.primary.opacity(0.04), in: Capsule())
             }
             Menu {
+                Button("位置設定組合…") { showingLocations = true }
                 Button("編輯路徑 ⌘L") { beginPathEditing() }
                 Button("篩選名稱 ⌘F") { beginFiltering() }
                 Divider()
@@ -99,11 +102,15 @@ struct FilePane: View {
                         .accessibilityLabel(remote ? "遠端完整路徑" : "本機完整路徑")
                 } else {
                     PaneBreadcrumbs(path: panel.path, navigate: navigate)
-                        .help(panel.path + "\n⌘L 編輯完整路徑")
+                        .help(panel.path + "\n按兩下開啟位置設定組合；⌘L 編輯完整路徑")
+                        .contentShape(Rectangle())
+                        .highPriorityGesture(TapGesture(count: 2).onEnded { activate(); showingLocations = true })
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 8).padding(.vertical, 7)
                 .background(Color.primary.opacity(0.045), in: RoundedRectangle(cornerRadius: 8))
+            Button { activate(); showingLocations = true } label: { Image(systemName: "folder.badge.gearshape") }
+                .help("位置設定組合").accessibilityLabel("位置設定組合")
             Button { beginPathEditing() } label: { Image(systemName: "pencil") }
                 .help("編輯路徑 ⌘L").accessibilityLabel("編輯路徑")
             Menu {
