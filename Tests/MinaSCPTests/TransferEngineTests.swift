@@ -5,6 +5,26 @@ actor RecordCapture {
     func set(_ value: TransferTask) { self.value = value }
 }
 final class TransferEngineTests: XCTestCase {
+    func testOverwritePreservesRemoteOwnershipAndMode() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appendingPathComponent("source"), target = root.appendingPathComponent("target")
+        try Data("replacement".utf8).write(to: source)
+        for mode in [0o640, 0o755, 0o600] {
+            try Data("original".utf8).write(to: target)
+            try FileManager.default.setAttributes([.posixPermissions: mode], ofItemAtPath: target.path)
+            let before = try LocalFiles.attributes(target.path)
+            var record = TransferTask(connection: Connection(fixture: true), direction: .upload, source: source.path, destination: target.path)
+            record.options.preservePermissions = true
+            _ = try await TransferEngine(record: record, conflict: { _ in ConflictResolution(policy: .overwrite) }, update: { _ in }).run()
+            let after = try LocalFiles.attributes(target.path)
+            XCTAssertEqual(after.uid, before.uid); XCTAssertEqual(after.gid, before.gid)
+            XCTAssertEqual(after.permissions! & 0o7777, UInt32(mode))
+            XCTAssertEqual(try String(contentsOf: target), "replacement")
+        }
+    }
+
     func testDirectoryRoundTripAndSymlinkWithoutFollowing() async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
@@ -52,6 +72,58 @@ final class TransferEngineTests: XCTestCase {
         do { _ = try await TransferEngine(record: record, conflict: { _ in throw CancellationError() }, update: { _ in }).run(); XCTFail("Corrupt partial must fail") } catch { }
         XCTAssertFalse(FileManager.default.fileExists(atPath: record.destination))
     }
+    func testDockerOverwritePreservesModeAndRefusesOwnershipLoss() async throws {
+        guard ProcessInfo.processInfo.environment["MINASCP_DOCKER_TEST"] == "1" else { throw XCTSkip("Docker integration enabled explicitly") }
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let connection = Connection(host: "127.0.0.1", user: "tester", port: "22222", identity: FileManager.default.currentDirectoryPath + "/.local-sftp/keys/id_ed25519")
+        let remote = "/data/metadata-" + UUID().uuidString
+        let source = root.appendingPathComponent("source")
+        try Data("original".utf8).write(to: source)
+        var record = TransferTask(connection: connection, direction: .upload, source: source.path, destination: remote)
+        let session = try await SFTPSession.open(connection)
+        do {
+            _ = try await TransferEngine(record: record, conflict: { _ in throw CancellationError() }, update: { _ in }).run()
+            try await session.setAttributes(remote, FileAttributes(permissions: 0o6755))
+            let original = try await session.attributes(remote)
+            try Data("updated".utf8).write(to: source)
+            record.id = UUID()
+            _ = try await TransferEngine(record: record, conflict: { _ in ConflictResolution(policy: .overwrite) }, update: { _ in }).run()
+            let updated = try await session.attributes(remote)
+            XCTAssertEqual(updated.uid, original.uid); XCTAssertEqual(updated.gid, original.gid)
+            XCTAssertEqual(updated.permissions, original.permissions)
+            let hash = try await session.hash(remote)
+            XCTAssertEqual(hash, try LocalFiles.hash(source.path))
+
+            // Give only this disposable fixture to another owner. The tester account
+            // must refuse replacement when it cannot chown its staging file back.
+            let process = Process(); process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+            process.arguments = ["docker", "compose", "-f", "compose.sftp-test.yml", "exec", "-T", "sftp", "chown", "0:0", remote]
+            try process.run(); process.waitUntilExit(); XCTAssertEqual(process.terminationStatus, 0)
+            let protected = try await session.attributes(remote)
+            XCTAssertEqual(protected.uid, 0)
+            try Data("must not replace".utf8).write(to: source)
+            record.id = UUID()
+            do {
+                _ = try await TransferEngine(record: record, conflict: { _ in ConflictResolution(policy: .overwrite) }, update: { _ in }).run()
+                XCTFail("Ownership restoration failure must block replacement")
+            } catch {
+                XCTAssertTrue(error.localizedDescription.contains("未覆蓋原檔"))
+            }
+            let retained = try await session.attributes(remote)
+            let retainedHash = try await session.hash(remote)
+            XCTAssertEqual(retained.uid, protected.uid); XCTAssertEqual(retained.gid, protected.gid)
+            XCTAssertEqual(retained.permissions, protected.permissions); XCTAssertEqual(retainedHash, hash)
+            for entry in try await session.list("/data") where entry.name.hasPrefix(".minascp-" + record.id.uuidString) {
+                try await session.remove(entry.path)
+            }
+            try await session.remove(remote); await session.close()
+        } catch {
+            try? await session.remove(remote); await session.close(); throw error
+        }
+    }
+
     func testDockerRoundTrip() async throws {
         guard ProcessInfo.processInfo.environment["MINASCP_DOCKER_TEST"] == "1" else { throw XCTSkip("Docker integration enabled explicitly") }
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

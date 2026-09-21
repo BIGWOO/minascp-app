@@ -164,6 +164,7 @@ actor TransferEngine {
             }
         }
         guard let (target, overwrite) = try await resolve(item, destination: record.checkpoints[item.relativePath]?.destination ?? destination) else { record.skippedCount = (record.skippedCount ?? 0) + 1; record.transferred += fingerprint.size; report(); return }
+        let originalTarget = record.direction == .upload && overwrite ? try await targetAttributes(target) : nil
         let staging = record.checkpoints[item.relativePath]?.staging ?? RemotePath.join(RemotePath.parent(target), ".minascp-\(record.id.uuidString)-\(SHA256.hash(data: Data(item.relativePath.utf8)).prefix(8).map { String(format: "%02x", $0) }.joined())")
         record.checkpoints[item.relativePath] = FileCheckpoint(source: fingerprint, staging: staging, destination: target)
         report(force: true)
@@ -187,6 +188,32 @@ actor TransferEngine {
             guard let targetAttributes = try await targetAttributes(target), targetAttributes.kind == .file, try await targetHash(target) == expected else { throw EditConflict() }
         }
         try await applyMetadata(attrs, to: staging)
+        if record.direction == .upload && overwrite {
+            guard let original = originalTarget, original.kind == .file,
+                  let uid = original.uid, let gid = original.gid, let permissions = original.permissions else {
+                throw TransferError.message("無法取得遠端原檔擁有者與權限；原檔與暫存檔已保留")
+            }
+            do {
+                guard let current = try await targetAttributes(target), current.kind == original.kind, current.uid == original.uid, current.gid == original.gid,
+                      current.permissions == original.permissions, current.size == original.size,
+                      current.modificationTime == original.modificationTime else {
+                    throw TransferError.message("上傳期間遠端屬性已變更，請重新確認覆蓋")
+                }
+                let staged = try await session!.attributes(staging)
+                if staged.uid != uid || staged.gid != gid {
+                    try await session!.setAttributes(staging, FileAttributes(uid: uid, gid: gid))
+                }
+                // chown may clear setuid/setgid: restore the full mode afterwards.
+                try await session!.setAttributes(staging, FileAttributes(permissions: permissions & 0o7777))
+                let verified = try await session!.attributes(staging)
+                guard verified.uid == uid, verified.gid == gid,
+                      verified.permissions.map({ $0 & 0o7777 }) == permissions & 0o7777 else {
+                    throw TransferError.message("遠端屬性讀回不符")
+                }
+            } catch {
+                throw TransferError.message("無法保留遠端原檔擁有者與權限，未覆蓋原檔：\(error.localizedDescription)")
+            }
+        }
         if [.upload, .remoteCopy].contains(record.direction) { try await session!.rename(staging, to: target, overwrite: overwrite) }
         else { try LocalFiles.atomicRename(staging, to: target, overwrite: overwrite) }
         record.checkpoints[item.relativePath]?.completed = true; report(force: true)
